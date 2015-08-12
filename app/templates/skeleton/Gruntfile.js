@@ -67,8 +67,22 @@ module.exports = function(grunt) {
                     livereloadOnError: false,
                     spawn: false
                 },
-                files: [createFolderGlobs(['*.js', '*.less', '*.html']), '!_SpecRunner.html', '!.grunt'],
+                files: [createFolderGlobs(['*.js', '*.html']), '!_SpecRunner.html', '!.grunt'],
                 tasks: [] //all the tasks are run dynamically during the watch event handler
+            },
+            css: {
+                files: [createFolderGlobs(['*.css'])],
+                options: {
+                    livereload: true,
+                    spawn: false
+                },
+            },
+            less: {
+                options: {
+                    livereload: false
+                },
+                files: [createFolderGlobs(['*.less'])],
+                tasks: ['less:dev'],
             }
         },
         jshint: {
@@ -81,13 +95,23 @@ module.exports = function(grunt) {
         },
         clean: {
             before: {
-                src: ['dist', 'temp']
+                src: ['dist/**/*', '!dist/.git/**', '!dist/.gitignore', 'temp'] //do not clean the git folder
             },
             after: {
                 src: ['temp']
             }
         },
         less: {
+            dev: {
+                options: {
+                    compress: false,
+                    sourceMap: false,
+                    sourceMapRootpath: '/'
+                },
+                files: {
+                    "app.css": "app.less"
+                }
+            },
             production: {
                 options: {},
                 files: {
@@ -110,7 +134,8 @@ module.exports = function(grunt) {
                 files: [{
                         src: ['img/**'],
                         dest: 'dist/'
-                    }, {
+                    },
+                    /*{
                         src: ['bower_components/font-awesome/fonts/**'],
                         dest: 'dist/',
                         filter: 'isFile',
@@ -120,7 +145,7 @@ module.exports = function(grunt) {
                         dest: 'dist/',
                         filter: 'isFile',
                         expand: true
-                    }
+                    }*/
                     //{src: ['bower_components/angular-ui-utils/ui-utils-ieshiv.min.js'], dest: 'dist/'},
                     //{src: ['bower_components/select2/*.png','bower_components/select2/*.gif'], dest:'dist/css/',flatten:true,expand:true},
                     //{src: ['bower_components/angular-mocks/angular-mocks.js'], dest: 'dist/'}
@@ -159,6 +184,10 @@ module.exports = function(grunt) {
         },
         cssmin: {
             main: {
+                options: {
+                    //root: '<%= yeoman.app %>' //set root path for css images?!
+                    keepSpecialComments: 0 //remove all comments from css
+                },
                 src: ['temp/app.css', '<%= dom_munger.data.appcss %>'],
                 dest: 'dist/app.full.min.css'
             }
@@ -230,12 +259,44 @@ module.exports = function(grunt) {
             during_watch: {
                 browsers: ['PhantomJS']
             },
+        },
+
+        buildcontrol: {
+            options: {
+                dir: 'dist',
+                commit: true,
+                push: true,
+                connectCommits: false, //allow build without a clean directory (otherwise asks for all files to be commited)
+                message: 'Built %sourceName% from commit %sourceCommit% on branch %sourceBranch%'
+            },
+            stagingServer: {
+                options: {
+                    remote: 'Remote-staging-DIST',
+                    //remote: 'ssh://domain:port/path/to/repository.git',
+                    branch: 'master', //default branch: dist,
+                    //login: 'username',
+                    remoteBranch: 'devel' //if you use the same remote for staging and production
+                }
+            },
+            productionServer: {
+                options: {
+                    remote: 'Remote-live-DIST',
+                    //remote: 'ssh://domain:port/path/to/repository.git',
+                    branch: 'master', //default branch: dist,
+                    //login: 'username',
+                    remoteBranch: 'master' ////if you use the same remote for staging and production
+
+                }
+            }
         }
     });
 
-    grunt.registerTask('build', ['jshint', 'clean:before', 'less', 'dom_munger', 'ngtemplates', 'cssmin', 'concat', 'ngAnnotate', 'uglify', 'copy', 'htmlmin', 'clean:after']);
+    grunt.registerTask('build', ['jshint', 'clean:before', 'less:production', 'dom_munger', 'ngtemplates', 'cssmin', 'concat', 'ngAnnotate', 'uglify', 'copy', 'htmlmin', 'clean:after']);
     grunt.registerTask('serve', ['dom_munger:read', 'jshint', 'connect', 'watch']);
     grunt.registerTask('test', ['dom_munger:read', 'karma:all_tests']);
+    grunt.registerTask('deploy-staging', ['buildcontrol:stagingServer']);
+    grunt.registerTask('deploy-LIVE', ['buildcontrol:productionServer']);
+
 
     grunt.event.on('watch', function(action, filepath) {
         //https://github.com/gruntjs/grunt-contrib-watch/issues/156

@@ -16,7 +16,7 @@ The new v3.0 generator has moved some files, made small changes how script tags 
 
 ```js
 {
-    "generator-cg-angular": {
+    "generator-rb-angular": {
         "uirouter": false,
         "partialDirectory": "partial/",
         "directiveDirectory": "directive/",
@@ -45,7 +45,7 @@ Upgrading from v3.0 to v3.1
 
 ```js
 {
-    "generator-cg-angular": {
+    "generator-rb-angular": {
         "uirouter": false,
         "partialDirectory": "partial/",
         "directiveDirectory": "directive/",

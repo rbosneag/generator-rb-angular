@@ -1,22 +1,22 @@
 {
-  "name": "generator-cg-angular",
+  "name": "generator-rb-angular",
   "version": "3.2.0",
-  "description": "Yeoman Generator for Enterprise Angular projects.",
+  "description": "Yeoman Generator for Enterprise Angular projects, fork.",
   "keywords": [
     "yeoman-generator",
     "angular"
   ],
-  "homepage": "https://github.com/cgross/generator-cg-angular",
-  "bugs": "https://github.com/cgross/generator-cg-angular/issues",
+  "homepage": "https://github.com/rbosneag/generator-rb-angular",
+  "bugs": "https://github.com/rbosneag/generator-rb-angular/issues",
   "author": {
-    "name": "Chris Gross",
-    "email": "schtoo@schtoo.com",
-    "url": "https://github.com/cgross"
+    "name": "Radu Bosneag",
+    "email": "rbosneag@gmail.com",
+    "url": "https://github.com/rbosneag"
   },
   "main": "app/index.js",
   "repository": {
     "type": "git",
-    "url": "git://github.com/cgross/generator-cg-angular.git"
+    "url": "git://github.com/rbosneag/generator-rb-angular.git"
   },
   "scripts": {
     "test": "mocha"

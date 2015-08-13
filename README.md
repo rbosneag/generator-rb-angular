@@ -1,8 +1,46 @@
 #generator-rb-angular
 
-This is a Yeoman Generator based on [Chris Gross](https://github.com/cgross)'s [generator-cg-angular](https://github.com/cgross/generator-cg-angular) with a few additions and updates to fit my workflow. 
-Check the *original* readme.md below:
+This is a Yeoman Generator based on [Chris Gross][cgross]'s [generator-cg-angular][cg-angular] with a few additions and updates to fit my workflow.  
+*For the [*original readme*][cg-readme] look below the introduction or check the original repo.*
 
+###Changes:
+* generated **gruntfile.js**:
+    *  load tasks only when needed using [jit-grunt](https://github.com/shootaroo/jit-grunt) to speed up most tasks
+    *  shows task duration with [time-grunt](https://github.com/sindresorhus/time-grunt)
+    *  added *mod_rewrite* to allow nested html5 url's using [connect-modrewrite](https://github.com/tinganho/connect-modrewrite)
+    *  support for easy deployment using [grunt-build-control][buildcontrol]
+    *  liveReload for *.less* files without browser refresh
+    *  *clean* task does not remove *.git* folder from the *dist* folder (useful for setting up a repository in *dist* folder for deployment)
+    *  *css* task removes all comments
+    *  example of [grunt-build-control][buildcontrol] tasks to deploy on staging and live server with git (for other options than *git* deployment check [project repo][buildcontrol])
+* generated **app.js**:
+    *  html5 mode enabled by default
+    *  allow trailing slash for url's
+    *  added option to not/have debug info (disable when deploying). **Warn:** *I noticed that disabling debug info on older versions of angular has some issues so you'd better test your project before deploying*
+* project's **bower.json**:
+    *  up to date versions for dependencies
+    *  removed angular-ui-utils (deprecated)
+
+Other improvements soon to come.   
+If you have any recommandations/issues, drop me an email. 
+
+#####Versions
+I decided to keep [cg-angular][cg-angular]'s versions and go further from there. His latest release was 3.2.0 on Dec '14.
+
+#####Issues
+At the moment of this writing the project has not been thoroughly tested.  
+Although I hope it is stable (no major changes on cgross's code) and it works fine for me you'd better make sure it covers your workflow before using it for real projects.
+For any problems, feel free to open an issue or send a PR.
+
+#####&copy;Copyright: 
+All the great work has been done by [**cgross**][cgross]. This project is built upon a fork from [cg-angular][cg-angular] and should keep growing.  
+The reason behind this project is that his repo has not been updated since Dec '14 and many useful options may be ommited by new users.
+*If you don't feel the above copyright notice is alright, send me a suggestion to improve it.*
+
+####Original readme:
+
+
+###[generator-cg-angular](https://github.com/cgross/generator-cg-angular) **Readme**:
 >Yeoman Generator for Enterprise Angular Projects
 
 This generator follows the [Angular Best Practice Guidelines for Project Structure](https://blog.angularjs.org/2014/02/an-angularjs-style-guide-and-best.html?_escaped_fragment_=).
@@ -171,3 +209,8 @@ Release History
 * 7/08/2013 - V1.0.2 - Added utf8 charset to index.html.  Fix for "EMFile, too many open files" on `grunt watch` by no longer watching the `lib` folder.
 * 6/20/2013 - v1.0.1 - Fixed a ton of known issues.  Replaced `grunt-regarde` with `grunt-contrib-watch`.  Fixed and tweaked the unit test specs and `grunt test`.  Fixed issues with the build.  Generator is now ready for real use.
 * 6/18/2013 - v1.0.0 - Initial release of template as Yeoman generator.
+
+[buildcontrol]: https://github.com/robwierzbowski/grunt-build-control
+[cgross]: https://github.com/cgross
+[cg-angular]: https://github.com/cgross/generator-cg-angular
+[cg-readme]: file:///var/folders/hr/2qj0skxd4n54s5v0kx4m4hs80000gn/T/439.html#original-readme

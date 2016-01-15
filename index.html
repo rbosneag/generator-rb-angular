@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    <meta charset="UTF-8">
+    <title>Generator-rb-angular by rbosneag</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="stylesheets/normalize.css" media="screen">
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen">
+    <link rel="stylesheet" type="text/css" href="stylesheets/github-light.css" media="screen">
+  </head>
+  <body>
+    <section class="page-header">
+      <h1 class="project-name">Generator-rb-angular</h1>
+      <h2 class="project-tagline">Yeoman generator for Enterprise Angular projects</h2>
+      <a href="https://github.com/rbosneag/generator-rb-angular" class="btn">View on GitHub</a>
+      <a href="https://github.com/rbosneag/generator-rb-angular/zipball/master" class="btn">Download .zip</a>
+      <a href="https://github.com/rbosneag/generator-rb-angular/tarball/master" class="btn">Download .tar.gz</a>
+    </section>
+
+    <section class="main-content">
+      <h1>
+<a id="generator-rb-angular" class="anchor" href="#generator-rb-angular" aria-hidden="true"><span class="octicon octicon-link"></span></a>generator-rb-angular</h1>
+
+<p>This is a Yeoman Generator based on <a href="https://github.com/cgross">Chris Gross</a>'s <a href="https://github.com/cgross/generator-cg-angular">generator-cg-angular</a> with a few additions and updates to fit my workflow.<br>
+<em>For the <em>original readme</em> look below the introduction or check the original repo.</em></p>
+
+<h3>
+<a id="changes" class="anchor" href="#changes" aria-hidden="true"><span class="octicon octicon-link"></span></a>Changes:</h3>
+
+<ul>
+<li>generated <strong>gruntfile.js</strong>:
+
+<ul>
+<li> load tasks only when needed using <a href="https://github.com/shootaroo/jit-grunt">jit-grunt</a> to speed up most tasks</li>
+<li> shows task duration with <a href="https://github.com/sindresorhus/time-grunt">time-grunt</a>
+</li>
+<li> added <em>mod_rewrite</em> to allow nested html5 url's using <a href="https://github.com/tinganho/connect-modrewrite">connect-modrewrite</a>
+</li>
+<li> support for easy deployment using <a href="https://github.com/robwierzbowski/grunt-build-control">grunt-build-control</a>
+</li>
+<li> liveReload for <em>.less</em> files without browser refresh</li>
+<li> <em>clean</em> task does not remove <em>.git</em> folder from the <em>dist</em> folder (useful for setting up a repository in <em>dist</em> folder for deployment)</li>
+<li> <em>css</em> task removes all comments</li>
+<li> example of <a href="https://github.com/robwierzbowski/grunt-build-control">grunt-build-control</a> tasks to deploy on staging and live server with git (for other options than <em>git</em> deployment check <a href="https://github.com/robwierzbowski/grunt-build-control">project repo</a>)</li>
+</ul>
+</li>
+<li>generated <strong>app.js</strong>:
+
+<ul>
+<li> html5 mode enabled by default</li>
+<li> allow trailing slash for url's</li>
+<li> added option to not/have debug info (disable when deploying). <strong>Warn:</strong> <em>I noticed that disabling debug info on older versions of angular has some issues so you'd better test your project before deploying</em>
+</li>
+</ul>
+</li>
+<li>project's <strong>bower.json</strong>:
+
+<ul>
+<li> up to date versions for dependencies</li>
+<li> removed angular-ui-utils (deprecated)</li>
+</ul>
+</li>
+</ul>
+
+<p>Other improvements soon to come.<br>
+If you have any recommandations/issues, drop me an email. </p>
+
+<h5>
+<a id="versions" class="anchor" href="#versions" aria-hidden="true"><span class="octicon octicon-link"></span></a>Versions</h5>
+
+<p>I decided to keep <a href="https://github.com/cgross/generator-cg-angular">cg-angular</a>'s versions and go further from there. His latest release was 3.2.0 on Dec '14.</p>
+
+<h5>
+<a id="issues" class="anchor" href="#issues" aria-hidden="true"><span class="octicon octicon-link"></span></a>Issues</h5>
+
+<p>At the moment of this writing the project has not been thoroughly tested.<br>
+Although I hope it is stable (no major changes on cgross's code) and it works fine for me you'd better make sure it covers your workflow before using it for real projects.
+For any problems, feel free to open an issue or send a PR.</p>
+
+<h5>
+<a id="copyright" class="anchor" href="#copyright" aria-hidden="true"><span class="octicon octicon-link"></span></a>©Copyright:</h5>
+
+<p>All the great work has been done by <a href="https://github.com/cgross"><strong>cgross</strong></a>. This project is built upon a fork from <a href="https://github.com/cgross/generator-cg-angular">cg-angular</a> and should keep growing.<br>
+The reason behind this project is that his repo has not been updated since Dec '14 and many useful options may be ommited by new users.
+<em>If you don't feel the above copyright notice is alright, send me a suggestion to improve it.</em></p>
+
+<h4>
+<a id="original-readme" class="anchor" href="#original-readme" aria-hidden="true"><span class="octicon octicon-link"></span></a>Original readme:</h4>
+
+<h3>
+<a id="generator-cg-angular-readme" class="anchor" href="#generator-cg-angular-readme" aria-hidden="true"><span class="octicon octicon-link"></span></a><a href="https://github.com/cgross/generator-cg-angular">generator-cg-angular</a> <strong>Readme</strong>:</h3>
+
+<blockquote>
+<p>Yeoman Generator for Enterprise Angular Projects</p>
+</blockquote>
+
+<p>This generator follows the <a href="https://blog.angularjs.org/2014/02/an-angularjs-style-guide-and-best.html?_escaped_fragment_=">Angular Best Practice Guidelines for Project Structure</a>.</p>
+
+<p>Features</p>
+
+<ul>
+<li>Provides a directory structure geared towards large Angular projects.
+
+<ul>
+<li>Each controller, service, filter, and directive are placed in their own file.</li>
+<li>All files related to a conceptual unit are placed together.  For example, the controller, HTML, LESS, and unit test for a partial are placed together in the same directory.</li>
+</ul>
+</li>
+<li>Provides a ready-made Grunt build that produces an extremely optimized distribution.
+
+<ul>
+<li>Build uses <a href="https://github.com/olov/ng-annotate">grunt-ng-annotate</a> so you don't have to use the Angular injection syntax for safe minification (i.e. you dont need <code>$inject</code> or <code>(['$scope','$http',...</code>.</li>
+<li>
+<code>grunt serve</code> task allows you to run a simple development server with watch/livereload enabled.  Additionally, JSHint and the appropriate unit tests are run for the changed files.</li>
+</ul>
+</li>
+<li>Integrates Bower for package management</li>
+<li>Includes Yeoman subgenerators for directives, services, partials, filters, and modules.</li>
+<li>Integrates LESS and includes Bootstrap via the source LESS files allowing you to reuse Bootstrap vars/mixins/etc.</li>
+<li>Easily Testable - Each sub-generator creates a skeleton unit test.  Unit tests can be run via <code>grunt test</code> and they run automatically during the grunt watch that is active during <code>grunt serve</code>.</li>
+</ul>
+
+<h2>
+<a id="directory-layout" class="anchor" href="#directory-layout" aria-hidden="true"><span class="octicon octicon-link"></span></a>Directory Layout</h2>
+
+<p>All subgenerators prompt the user to specify where to save the new files.  Thus you can create any directory structure you desire, including nesting.  The generator will create a handful of files in the root of your project including <code>index.html</code>, <code>app.js</code>, and <code>app.less</code>.  You determine how the rest of the project will be structured.</p>
+
+<p>In this example, the user has chosen to group the app into an <code>admin</code> folder, a <code>search</code> folder, and a <code>service</code> folder.</p>
+
+<pre><code>app.less ....................... main app-wide styles
+app.js ......................... angular module initialization and route setup
+index.html ..................... main HTML file
+Gruntfile.js ................... Grunt build file
+/admin ......................... example admin module folder
+  admin.js ..................... admin module initialization and route setup
+  admin.less ................... admin module LESS
+  /admin-directive1 ............ angular directives folder
+    admin-directive1.js ........ example simple directive
+    admin-directive1-spec.js.... example simple directive unit test
+  /admin-directive2 ............ example complex directive (contains external partial)
+    admin-directive2.js ........ complex directive javascript
+    admin-directive2.html ...... complex directive partial
+    admin-directive2.less ...... complex directive LESS
+    admin-directive2-spec.js ... complex directive unit test
+  /admin-partial ............... example partial
+    admin-partial.html ......... example partial html
+    admin-partial.js ........... example partial controller
+    admin-partial.less ......... example partial LESS
+    admin-partial-spec.js ...... example partial unit test
+/search ........................ example search component folder
+  my-filter.js ................. example filter
+  my-filter-spec.js ............ example filter unit test
+  /search-partial .............. example partial
+    search-partial.html ........ example partial html
+    search-partial.js .......... example partial controller
+    search-partial.less ........ example partial LESS
+    search-partial-spec.js ..... example partial unit test
+/service ....................... angular services folder
+    my-service.js .............. example service
+    my-service-spec.js ......... example service unit test
+    my-service2.js ............. example service
+    my-service2-spec.js ........ example service unit test
+/img ........................... images (not created by default but included in /dist if added)
+/dist .......................... distributable version of app built using grunt and Gruntfile.js
+/bower_component................ 3rd party libraries managed by bower
+/node_modules .................. npm managed libraries used by grunt
+</code></pre>
+
+<h2>
+<a id="getting-started" class="anchor" href="#getting-started" aria-hidden="true"><span class="octicon octicon-link"></span></a>Getting Started</h2>
+
+<p>Prerequisites: Node, Grunt, Yeoman, and Bower.  Once Node is installed, do:</p>
+
+<pre><code>npm install -g grunt-cli yo bower
+</code></pre>
+
+<p>Next, install this generator:</p>
+
+<pre><code>npm install -g generator-rb-angular
+</code></pre>
+
+<p>To create a project:</p>
+
+<pre><code>mkdir MyNewAwesomeApp
+cd MyNewAwesomeApp
+yo rb-angular
+</code></pre>
+
+<h2>
+<a id="grunt-tasks" class="anchor" href="#grunt-tasks" aria-hidden="true"><span class="octicon octicon-link"></span></a>Grunt Tasks</h2>
+
+<p>Now that the project is created, you have 3 simple Grunt commands available:</p>
+
+<pre><code>grunt serve   #This will run a development server with watch &amp; livereload enabled.
+grunt test    #Run local unit tests.
+grunt build   #Places a fully optimized (minified, concatenated, and more) in /dist
+</code></pre>
+
+<p>When <code>grunt serve</code> is running, any changed javascript files will be linted using JSHint as well as have their appropriate unit tests executed.  Only the unit tests that correspond to the changed file will be run.  This allows for an efficient test driven workflow.</p>
+
+<h2>
+<a id="yeoman-subgenerators" class="anchor" href="#yeoman-subgenerators" aria-hidden="true"><span class="octicon octicon-link"></span></a>Yeoman Subgenerators</h2>
+
+<p>There are a set of subgenerators to initialize empty Angular components.  Each of these generators will:</p>
+
+<ul>
+<li>Create one or more skeleton files (javascript, LESS, html, spec etc) for the component type.</li>
+<li>Update index.html and add the necessary <code>script</code> tags.</li>
+<li>Update app.less and add the <a href="https://github.com/import" class="user-mention">@import</a> as needed.</li>
+<li>For partials, update the app.js, adding the necessary route call if a route was entered in the generator prompts.</li>
+</ul>
+
+<p>There are generators for <code>directive</code>,<code>partial</code>,<code>service</code>, <code>filter</code>, <code>module</code>, and <code>modal</code>.</p>
+
+<p>Running a generator:</p>
+
+<pre><code>yo rb-angular:directive my-awesome-directive
+yo rb-angular:partial my-partial
+yo rb-angular:service my-service
+yo rb-angular:filter my-filter
+yo rb-angular:module my-module
+yo rb-angular:modal my-modal
+</code></pre>
+
+<p>The name paramater passed (i.e. 'my-awesome-directive') will be used as the file names.  The generators will derive appropriate class names from this parameter (ex. 'my-awesome-directive' will convert to a class name of 'MyAwesomeDirective').  Each sub-generator will ask for the folder in which to create the new skeleton files.  You may override the default folder for each sub-generator in the <code>.yo-rc.json</code> file.</p>
+
+<p>The modal subgenerator is a convenient shortcut to create partials that work as modals for Bootstrap v3.1 and Angular-UI-Bootstrap v0.10 (both come preconfigured with this generator).  If you choose not to use either of these libraries, simply don't use the modal subgenerator.</p>
+
+<p>Subgenerators are also customizable.  Please read <a href="CUSTOMIZING.md">CUSTOMIZING.md</a> for details.</p>
+
+<h2>
+<a id="submodules" class="anchor" href="#submodules" aria-hidden="true"><span class="octicon octicon-link"></span></a>Submodules</h2>
+
+<p>Submodules allow you to more explicitly separate parts of your application.  Use the <code>yo rb-angular:module my-module</code> command and specify a new subdirectory to place the module into.  Once you've created a submodule, running other subgenerators will now prompt you to select the module in which to place the new component.</p>
+
+<h2>
+<a id="preconfigured-libraries" class="anchor" href="#preconfigured-libraries" aria-hidden="true"><span class="octicon octicon-link"></span></a>Preconfigured Libraries</h2>
+
+<p>The new app will have a handful of preconfigured libraries included.  This includes Angular 1.2, Bootstrap 3, AngularUI Bootstrap, AngularUI Utils, FontAwesome 4, JQuery 2, Underscore 1.5, LESS 1.6, and Moment 2.5.  You may of course add to or remove any of these libraries.  But the work to integrate them into the app and into the build process has already been done for you.</p>
+
+<h2>
+<a id="build-process" class="anchor" href="#build-process" aria-hidden="true"><span class="octicon octicon-link"></span></a>Build Process</h2>
+
+<p>The project will include a ready-made Grunt build that will:</p>
+
+<ul>
+<li>Build all the LESS files into one minified CSS file.</li>
+<li>Uses <a href="https://github.com/ericclemmons/grunt-angular-templates">grunt-angular-templates</a> to turn all your partials into Javascript.</li>
+<li>Uses <a href="https://github.com/olov/ng-annotate">grunt-ng-annotate</a> to preprocess all Angular injectable methods and make them minification safe.  Thus you don't have to use the array syntax.</li>
+<li>Concatenates and minifies all Javascript into one file.</li>
+<li>Replaces all appropriate script references in <code>index.html</code> with the minified CSS and JS files.</li>
+<li>(Optionally) Minifies any images in <code>/img</code>.</li>
+<li>Minifies the <code>index.html</code>.</li>
+<li>Copies any extra files necessary for a distributable build (ex.  Font-Awesome font files, etc).</li>
+</ul>
+
+<p>The resulting build loads only a few highly compressed files.</p>
+
+<p>The build process uses <a href="https://github.com/cgross/grunt-dom-munger">grunt-dom-munger</a> to pull script references from the <code>index.html</code>.  This means that <strong>your index.html is the single source of truth about what makes up your app</strong>.  Adding a new library, new controller, new directive, etc does not require that you update the build file.  Also the order of the scripts in your <code>index.html</code> will be maintained when they're concatenated.</p>
+
+<p>Importantly, grunt-dom-munger uses CSS attribute selectors to manage the parsing of the script and link tags.  Its very easy to exclude certain scripts or stylesheets from the concatenated files. This is often the case if you're using a CDN. This can also be used to prevent certain development scripts from being included in the final build.</p>
+
+<ul>
+<li><p>To prevent a script or stylesheet from being included in concatenation, put a <code>data-concat="false"</code> attribute on the link or script tag.  This is currently applied for the <code>livereload.js</code> and <code>less.js</code> script tags.</p></li>
+<li><p>To prevent a script or link tag from being removed from the finalized <code>index.html</code>, use a <code>data-remove="false"</code> attribute.</p></li>
+</ul>
+
+<h2>
+<a id="release-history" class="anchor" href="#release-history" aria-hidden="true"><span class="octicon octicon-link"></span></a>Release History</h2>
+
+<ul>
+<li>11/9/2014 - v3.2.0 - Switch from ngmin to ng-annotate.  Disabling grunt-contrib-imagemin so Windows users don't encounter its issues.  Subgenerators prompt for a name if not entered.  Other fixes.</li>
+<li>7/6/2014 - v3.1.2 - Fix for directive template URLs with backslashes on Windows.</li>
+<li>6/10/2014 - v3.1.1 - Fix for backslashes being used in injected routes/tags on subgenerators.</li>
+<li>5/1/2014 - v3.1.0 - New subgenerators for modules and modals.  Replaced grunt-contrib-jasmine with grunt-karma.  Karma allows us to test against actual browsers other than PhantomJS.</li>
+<li>3/10/2014 - v3.0.2 - Fix for directive files not being named correctly.  Fix for htmlmin from affecting some Bootstrap styles.</li>
+<li>3/03/2014 - v3.0.0 - All subgenerators now ask the user for a directory enabling any user-defined project structure.  Gruntfile has been altered to allow scripts, partials, and LESS files to be located anywhere in the project directory structure.  An option to use <code>angular-ui-router</code> is now available when initializing a new project. <code>js/setup.js</code> and <code>css/app.less</code> moved to <code>app.js</code> and <code>app.less</code>.  <code>grunt server</code> is now <code>grunt serve</code>.  Inside <code>index.html</code> all user script tags are grouped together instead of split out into groups for services/filters/etc.  New ability to customize the subgenerators.</li>
+<li>2/10/2014 - v2.1.1 - Fix for the directive spec file named with a .less extension.</li>
+<li>1/06/2014 - v2.1.0 - Nice enhancements for unit testing.  Specs are now placed in the same directory as the component they're testing.  Additionally, unit tests are now run during <code>grunt server</code> allowing for an easy and efficient test-driven workflow.</li>
+<li>12/30/2013 - v2.0.0 - Big Update.  Angular 1.2 and Bootstrap 3.  Newer versions of Angular UI, Font Awesome, and JQuery.  Lodash was replaced with Underscore.  Lots of other small changes.</li>
+<li>9/06/2013 - V1.0.4 - Fixed templating issue with generated specs for <code>yo rb-angular:service</code> subgenerator.</li>
+<li>8/29/2013 - V1.0.3 - Renamed <code>/lib</code> back to <code>/bower_components</code> as clarity trumps brevity.  Renamed <code>/bin</code> to <code>/dist</code>. Fixed spelling error in generated directive's js template location.  Moved up to later version of <code>yeoman-generator</code> dependency to solve "Cannot read bold of undefined" error coming from Yeoman.  JSHint options now read from <code>.jshintrc</code>.  And more small stuff.</li>
+<li>7/08/2013 - V1.0.2 - Added utf8 charset to index.html.  Fix for "EMFile, too many open files" on <code>grunt watch</code> by no longer watching the <code>lib</code> folder.</li>
+<li>6/20/2013 - v1.0.1 - Fixed a ton of known issues.  Replaced <code>grunt-regarde</code> with <code>grunt-contrib-watch</code>.  Fixed and tweaked the unit test specs and <code>grunt test</code>.  Fixed issues with the build.  Generator is now ready for real use.</li>
+<li>6/18/2013 - v1.0.0 - Initial release of template as Yeoman generator.</li>
+</ul>
+
+      <footer class="site-footer">
+        <span class="site-footer-owner"><a href="https://github.com/rbosneag/generator-rb-angular">Generator-rb-angular</a> is maintained by <a href="https://github.com/rbosneag">rbosneag</a>.</span>
+
+        <span class="site-footer-credits">This page was generated by <a href="https://pages.github.com">GitHub Pages</a> using the <a href="https://github.com/jasonlong/cayman-theme">Cayman theme</a> by <a href="https://twitter.com/jasonlong">Jason Long</a>.</span>
+      </footer>
+
+    </section>
+
+  
+  </body>
+</html>
